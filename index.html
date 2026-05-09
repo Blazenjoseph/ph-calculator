@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pH Calculator | Premium Chemistry App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <!-- Background Particles -->
+    <div id="particles-container"></div>
+
+    <main class="container">
+        <!-- Header -->
+        <header class="header animate-stagger">
+            <h1 class="gradient-text">pH Calculator</h1>
+            <p class="subtitle">Advanced chemical analysis and indicator</p>
+        </header>
+
+        <div class="app-grid">
+            <!-- Left Column: Input Panel -->
+            <section class="input-panel glass-card animate-stagger" style="--stagger-index: 1;">
+                <h2>Substance Data</h2>
+                
+                <div class="input-group">
+                    <label for="predefined-substance">Specific Chemical (Optional)</label>
+                    <div class="select-wrapper">
+                        <select id="predefined-substance" class="magnetic-btn">
+                            <option value="">-- Custom / Manual Entry --</option>
+                            <optgroup label="Strong Acids">
+                                <option value='{"type":"strong-acid","k":""}'>Hydrochloric acid HCl</option>
+                                <option value='{"type":"strong-acid","k":""}'>Sulfuric acid H₂SO₄</option>
+                                <option value='{"type":"strong-acid","k":""}'>Nitric acid HNO₃</option>
+                            </optgroup>
+                            <optgroup label="Weak Acids">
+                                <option value='{"type":"weak-acid","k":1.8e-5}'>Acetic acid CH₃COOH</option>
+                                <option value='{"type":"weak-acid","k":6.8e-4}'>Hydrofluoric acid HF</option>
+                                <option value='{"type":"weak-acid","k":4.3e-7}'>Carbonic acid H₂CO₃</option>
+                                <option value='{"type":"weak-acid","k":7.5e-3}'>Phosphoric acid H₃PO₄</option>
+                                <option value='{"type":"weak-acid","k":1.77e-4}'>Formic acid HCOOH</option>
+                                <option value='{"type":"weak-acid","k":6.5e-5}'>Benzoic acid C₆H₅COOH</option>
+                                <option value='{"type":"weak-acid","k":7.4e-4}'>Citric acid C₆H₈O₇</option>
+                                <option value='{"type":"weak-acid","k":1.4e-4}'>Lactic acid CH₃CHOHCOOH</option>
+                                <option value='{"type":"weak-acid","k":8.0e-5}'>Ascorbic acid (Vitamin C)</option>
+                            </optgroup>
+                            <optgroup label="Strong Bases">
+                                <option value='{"type":"strong-base","k":""}'>Sodium hydroxide NaOH</option>
+                                <option value='{"type":"strong-base","k":""}'>Potassium hydroxide KOH</option>
+                                <option value='{"type":"strong-base","k":""}'>Calcium hydroxide Ca(OH)₂</option>
+                            </optgroup>
+                            <optgroup label="Weak Bases">
+                                <option value='{"type":"weak-base","k":1.8e-5}'>Ammonia NH₃</option>
+                                <option value='{"type":"weak-base","k":4.4e-4}'>Methylamine CH₃NH₂</option>
+                                <option value='{"type":"weak-base","k":2.1e-4}'>Sodium carbonate Na₂CO₃</option>
+                                <option value='{"type":"weak-base","k":2.4e-8}'>Sodium bicarbonate NaHCO₃</option>
+                                <option value='{"type":"weak-base","k":1.7e-9}'>Pyridine C₅H₅N</option>
+                                <option value='{"type":"weak-base","k":4.3e-10}'>Aniline C₆H₅NH₂</option>
+                                <option value='{"type":"weak-base","k":3.3e-4}'>Calcium carbonate CaCO₃</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="substance-type">Type of Substance</label>
+                    <div class="select-wrapper">
+                        <select id="substance-type" class="magnetic-btn">
+                            <option value="strong-acid">Strong Acid</option>
+                            <option value="weak-acid">Weak Acid</option>
+                            <option value="strong-base">Strong Base</option>
+                            <option value="weak-base">Weak Base</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="concentration">Concentration (Molarity, M)</label>
+                    <input type="number" id="concentration" class="glow-input magnetic-btn" min="0.000000000000001" max="14" step="any" placeholder="e.g. 0.1" value="0.1">
+                </div>
+
+                <div class="input-group" id="k-value-group" style="display: none;">
+                    <label id="k-value-label" for="k-value">Ka Value</label>
+                    <input type="number" id="k-value" class="glow-input magnetic-btn" min="0" step="any" placeholder="e.g. 1.8e-5">
+                </div>
+
+                <button id="calculate-btn" class="primary-btn magnetic-btn">Calculate</button>
+
+                <div class="examples-container">
+                    <h3>Quick Examples</h3>
+                    <div class="examples-grid">
+                        <div class="example-card tilt-card magnetic-btn" data-ph="0.5">
+                            <span class="emoji">🔋</span> <span>Battery acid</span>
+                        </div>
+                        <div class="example-card tilt-card magnetic-btn" data-ph="1.5">
+                            <span class="emoji">🤢</span> <span>Stomach acid</span>
+                        </div>
+                        <div class="example-card tilt-card magnetic-btn" data-ph="2.4">
+                            <span class="emoji">🍋</span> <span>Lemon juice</span>
+                        </div>
+                        <div class="example-card tilt-card magnetic-btn" data-ph="2.9">
+                            <span class="emoji">🍾</span> <span>Vinegar</span>
+                        </div>
+                        <div class="example-card tilt-card magnetic-btn" data-ph="3.5">
+                            <span class="emoji">🍊</span> <span>Orange juice</span>
+                        </div>
+                        <div class="example-card tilt-card magnetic-btn" data-ph="5.0">
+                            <span class="emoji">☕</span> <span>Coffee</span>
+                        </div>
+                        <div class="example-card tilt-card magnetic-btn" data-ph="6.5">
+                            <span class="emoji">🥛</span> <span>Milk</span>
+                        </div>
+                        <div class="example-card tilt-card magnetic-btn" data-ph="7.0">
+                            <span class="emoji">💧</span> <span>Pure water</span>
+                        </div>
+                        <div class="example-card tilt-card magnetic-btn" data-ph="7.4">
+                            <span class="emoji">🩸</span> <span>Blood</span>
+                        </div>
+                        <div class="example-card tilt-card magnetic-btn" data-ph="8.3">
+                            <span class="emoji">🧁</span> <span>Baking soda</span>
+                        </div>
+                        <div class="example-card tilt-card magnetic-btn" data-ph="11.5">
+                            <span class="emoji">🪟</span> <span>Ammonia</span>
+                        </div>
+                        <div class="example-card tilt-card magnetic-btn" data-ph="12.5">
+                            <span class="emoji">🧴</span> <span>Bleach</span>
+                        </div>
+                        <div class="example-card tilt-card magnetic-btn" data-ph="14.0">
+                            <span class="emoji">🚰</span> <span>Drain cleaner</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Column: Results Panel -->
+            <section class="results-panel glass-card animate-stagger" style="--stagger-index: 2;">
+                <div class="ph-display" id="ph-card">
+                    <h2>Estimated pH</h2>
+                    <div class="ph-number-container">
+                        <span id="ph-value" class="ph-value">1.00</span>
+                    </div>
+                    <div class="ph-scale-slider">
+                        <div class="scale-gradient"></div>
+                        <div id="ph-needle" class="scale-needle"></div>
+                    </div>
+                </div>
+
+                <div class="details-grid">
+                    <div class="detail-card glass-subcard">
+                        <h4>[H⁺] Concentration</h4>
+                        <div class="detail-value" id="h-conc">1.0e-1 M</div>
+                    </div>
+                    <div class="detail-card glass-subcard">
+                        <h4>[OH⁻] Concentration</h4>
+                        <div class="detail-value" id="oh-conc">1.0e-13 M</div>
+                    </div>
+                    <div class="detail-card glass-subcard">
+                        <h4>pOH Value</h4>
+                        <div class="detail-value" id="poh-value">13.00</div>
+                    </div>
+                    <div class="detail-card glass-subcard">
+                        <h4>Danger Level</h4>
+                        <div class="danger-meter-container">
+                            <div class="danger-bar">
+                                <div id="danger-fill" class="danger-fill"></div>
+                            </div>
+                            <span id="danger-label" class="danger-label">Corrosive Acid</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
